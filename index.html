@@ -36,8 +36,8 @@ html, body { margin: 0; }
 body {
   min-height: 100svh;
   display: grid;
-  /* card centres in the free space; logo keeps its own row at the bottom */
-  grid-template-rows: 1fr auto;
+  /* logo takes the top row; card centres in the space left below it */
+  grid-template-rows: auto 1fr;
   justify-items: center;
   row-gap: clamp(1.25rem, 3vh, 2rem);
   padding: clamp(1.5rem, 4vh, 2.5rem) 1.25rem clamp(1.5rem, 4vh, 2.5rem);
@@ -52,16 +52,24 @@ body {
   background-attachment: fixed;
 }
 
-/* Scan viewfinder corners, tiled as texture over the gradient.
-   Drawn as a background-image so it costs no DOM and no JS. */
+/* Scan viewfinder corners as a page-wide texture.
+   The gradient is the painted layer and the tiled bracket is its mask, so one
+   continuous ramp runs across every tile — a repeating image alone can't do
+   that, since each tile would carry an identical copy of the gradient. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M78 12 h26 a4 4 0 0 1 4 4 v26' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-size: 120px 120px;
-  opacity: .13;
+  background: linear-gradient(180deg, #000 0%, #000 30%, #9AA6B8 50%, #FFF 70%, #FFF 100%);
+  --bracket: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='68'%3E%3Cpath d='M40 8 h16 a4 4 0 0 1 4 4 v16' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--bracket);
+  mask-image: var(--bracket);
+  -webkit-mask-size: 68px 68px;
+  mask-size: 68px 68px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  opacity: .5;
 }
 
 main {
@@ -170,6 +178,10 @@ main a:focus-visible { outline-color: var(--blue-600); }
 </style>
 </head>
 <body>
+<a class="logo" href="https://scandit.com" rel="noopener">
+  <img src="scandit-logo-black.svg" alt="Scandit">
+</a>
+
 <main>
   <img class="avatar" src="photo.jpg" width="440" height="440" alt="John Halazonetis">
 
@@ -197,8 +209,5 @@ main a:focus-visible { outline-color: var(--blue-600); }
   }
 </script>
 
-<a class="logo" href="https://scandit.com" rel="noopener">
-  <img src="scandit-logo.svg" alt="Scandit">
-</a>
 </body>
 </html>
