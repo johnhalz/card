@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>John Halazonetis</title>
+<meta name="description" content="Product Engineer II at Scandit AG, Zurich. Save my contact details.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="John Halazonetis">
+<meta property="og:description" content="Product Engineer II at Scandit AG, Zurich.">
+<meta property="og:url" content="https://johnhalz.github.io/card/">
+<meta property="og:image" content="https://johnhalz.github.io/card/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="John Halazonetis">
+<meta name="twitter:description" content="Product Engineer II at Scandit AG, Zurich.">
+<meta name="twitter:image" content="https://johnhalz.github.io/card/og.jpg">
+<style>
+:root {
+  --bg: #ffffff;
+  --ink: #12161c;
+  --muted: #5a6472;
+  --scan: #0b7fe0;
+  --on-action: #ffffff;
+  --rule: rgba(18, 22, 28, .14);
+  --frame: min(42vw, 11rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0e14;
+    --ink: #eef2f7;
+    --muted: #93a0b4;
+    --scan: #3aa0ff;
+    --on-action: #0a0e14;
+    --rule: rgba(238, 242, 247, .16);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-text-size-adjust: 100%;
+  padding: clamp(1.5rem, 6vw, 3rem) clamp(1.25rem, 6vw, 3rem);
+  min-height: 100vh;
+}
+main { max-width: 26rem; }
+
+/* The one bold element: the camera looking at the face. */
+.frame {
+  position: relative;
+  width: var(--frame);
+  aspect-ratio: 1;
+  margin-bottom: clamp(1.5rem, 5vw, 2rem);
+  overflow: hidden;
+}
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 2px,
+    color-mix(in srgb, var(--scan) 10%, transparent) 2px 3px,
+    transparent 3px 4px
+  );
+  pointer-events: none;
+}
+.sweep {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  background: var(--scan);
+  box-shadow: 0 0 10px 1px var(--scan);
+  animation: sweep .9s cubic-bezier(.22, .61, .36, 1) 1 forwards;
+  pointer-events: none;
+}
+@keyframes sweep {
+  from { transform: translateY(0);      opacity: 0; }
+  15%  {                                opacity: 1; }
+  to   { transform: translateY(var(--frame)); opacity: 0; }
+}
+
+h1 {
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  font-weight: 650;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  margin: 0 0 .6rem;
+}
+.role { margin: 0; font-size: 1rem; }
+.where { margin: .15rem 0 0; font-size: .9375rem; color: var(--muted); }
+
+.save {
+  display: block;
+  margin: clamp(1.75rem, 6vw, 2.5rem) 0 0;
+  padding: 1.05rem 1.25rem;
+  background: var(--ink);
+  color: var(--on-action);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.more {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  font-size: .9375rem;
+}
+.more a { color: var(--muted); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+a:focus-visible, .save:focus-visible {
+  outline: 2px solid var(--scan);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sweep { display: none; }
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="frame">
+    <img src="photo.jpg" width="600" height="600" alt="John Halazonetis">
+    <div class="sweep"></div>
+  </div>
+
+  <h1>John Halazonetis</h1>
+  <p class="role">Product Engineer II, Scandit AG</p>
+  <p class="where">Zurich, Switzerland</p>
+
+  <a class="save" href="contact.vcf" download="john-halazonetis.vcf">Save contact</a>
+
+  <p class="more">
+    <a href="mailto:john.halazonetis@scandit.com">Email</a>
+    <a href="https://www.linkedin.com/in/john-halazonetis-53bb83158/" rel="noopener">LinkedIn</a>
+  </p>
+</main>
+</body>
+</html>
