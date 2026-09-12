@@ -33,11 +33,6 @@ def fold(line, limit=75):
     return out
 
 
-def _display_name(c):
-    name = f"{c['first_name']} {c['last_name']}"
-    return f"{name}, {c['suffix']}" if c.get("suffix") else name
-
-
 def build(c):
     photo = base64.b64encode((ROOT / c["photo"]).read_bytes()).decode("ascii")
 
@@ -45,14 +40,11 @@ def build(c):
         "BEGIN:VCARD",
         "VERSION:3.0",
         # N is Family;Given;Additional;Prefix;Suffix
-        f"N:{esc(c['last_name'])};{esc(c['first_name'])};;;{esc(c.get('suffix', ''))}",
-        # FN is the display name, so it carries the comma the card shows;
-        # N's suffix slot above stays unpunctuated, being structured data
-        f"FN:{esc(_display_name(c))}",
+        f"N:{esc(c['last_name'])};{esc(c['first_name'])};;;",
+        f"FN:{esc(c['first_name'])} {esc(c['last_name'])}",
         f"ORG:{esc(c['org'])}",
         f"TITLE:{esc(c['title'])}",
         f"EMAIL;TYPE=INTERNET,WORK:{c['email']}",
-        f"ADR;TYPE=WORK:;;;{esc(c['city'])};;;{esc(c['country'])}",
         f"URL:{c['url']}",
         *fold(f"PHOTO;ENCODING=b;TYPE=JPEG:{photo}"),
         f"REV:{datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}",
@@ -70,10 +62,12 @@ def check(raw, c):
     assert text.endswith("END:VCARD\r\n"), "bad trailer"
     for line in text.split("\r\n"):
         assert len(line.encode()) <= 75, f"line over 75 octets: {line[:40]}..."
-    # compare against the escaped form — a title containing a comma is stored
-    # as "Product Engineer II\, Loss Prevention", not the raw string
-    for needle in (c["org"], c["title"], c["city"], c["country"]):
+    # compare against the escaped form — a value containing a comma is stored
+    # escaped (e.g. "Engineer\, Loss Prevention"), not as the raw string
+    for needle in (c["org"], c["title"]):
         assert esc(needle) in text, f"missing field: {needle}"
+    assert "ADR" not in text, "address should not be in the vCard"
+    assert "MSc" not in text, "post-nominal should not be in the vCard"
     assert c["email"] in text, "missing field: email"
     assert "PHOTO;ENCODING=b;TYPE=JPEG:" in text, "photo not embedded"
 
