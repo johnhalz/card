@@ -52,24 +52,16 @@ body {
   background-attachment: fixed;
 }
 
-/* Scan viewfinder corners as a page-wide texture.
-   The gradient is the painted layer and the tiled bracket is its mask, so one
-   continuous ramp runs across every tile — a repeating image alone can't do
-   that, since each tile would carry an identical copy of the gradient. */
+/* Scan viewfinder corners, tiled as texture over the gradient.
+   Drawn as a background-image so it costs no DOM and no JS. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, #000 0%, #000 30%, #9AA6B8 50%, #FFF 70%, #FFF 100%);
-  --bracket: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='68'%3E%3Cpath d='M40 8 h16 a4 4 0 0 1 4 4 v16' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  -webkit-mask-image: var(--bracket);
-  mask-image: var(--bracket);
-  -webkit-mask-size: 68px 68px;
-  mask-size: 68px 68px;
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
-  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='68'%3E%3Cpath d='M40 8 h16 a4 4 0 0 1 4 4 v16' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 68px 68px;
+  opacity: .16;
 }
 
 main {
