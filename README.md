@@ -36,7 +36,7 @@ python3 scripts/build-vcf.py
 reprinting anything.
 
 ```sh
-qrencode -t SVG -m 1 -o qr.svg "https://johnhalz.github.io/card/"
+qrencode -t SVG -m 4 -o qr.svg "https://johnhalz.github.io/card/"
 ```
 
 It is SVG, so it scales into slides or an email signature at any size.
