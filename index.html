@@ -117,7 +117,7 @@ h1 {
   line-height: 1.2;
   margin: 0 0 .25rem;
 }
-.role  { margin: 0; font-size: .9375rem; color: var(--text-secondary); }
+.role  { margin: 0; font-size: 1.0625rem; color: var(--text-secondary); }
 
 /* Primary button: 40px, 8px radius, label/large per the UI Kit */
 .save {
@@ -182,11 +182,9 @@ h1 {
   height: auto;
 }
 
-/* post-nominal sits quieter than the name it follows */
-.post {
-  font-weight: 500;
-  color: var(--text-secondary);
-}
+/* post-nominal matches the name's colour; the lighter weight is what
+   keeps it from reading as part of the surname */
+.post { font-weight: 500; }
 
 a:focus-visible {
   outline: 2px solid var(--text-inverted);
