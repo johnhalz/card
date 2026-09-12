@@ -109,7 +109,9 @@ main {
 }
 
 h1 {
-  font-size: 1.5rem;
+  /* scales down on narrow screens so "MSc." stays on the name's line
+     rather than wrapping to an orphan of its own */
+  font-size: clamp(1.25rem, 6.4vw, 1.5rem);
   font-weight: 600;
   letter-spacing: -.01em;
   line-height: 1.2;
@@ -168,22 +170,22 @@ h1 {
 
 .logo {
   display: inline-block;
-  padding: .375rem .5rem;   /* keeps the tap target comfortable */
-  margin-bottom: .5rem;
+  /* negative top margin pulls it up against the card's padding without
+     shrinking the tap target, which stays at the padded size */
+  margin: -.5rem 0 1.125rem;
+  padding: .5rem;
   border-radius: 6px;
 }
 .logo img {
   display: block;
-  width: 6.25rem;
+  width: 7.5rem;
   height: auto;
 }
 
 /* post-nominal sits quieter than the name it follows */
 .post {
-  font-size: .7em;
   font-weight: 500;
   color: var(--text-secondary);
-  letter-spacing: 0;
 }
 
 a:focus-visible {
