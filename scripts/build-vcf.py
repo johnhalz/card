@@ -62,8 +62,11 @@ def check(raw, c):
     assert text.endswith("END:VCARD\r\n"), "bad trailer"
     for line in text.split("\r\n"):
         assert len(line.encode()) <= 75, f"line over 75 octets: {line[:40]}..."
-    for needle in (c["org"], c["title"], c["city"], c["country"], c["email"]):
-        assert needle in text, f"missing field: {needle}"
+    # compare against the escaped form — a title containing a comma is stored
+    # as "Product Engineer II\, Loss Prevention", not the raw string
+    for needle in (c["org"], c["title"], c["city"], c["country"]):
+        assert esc(needle) in text, f"missing field: {needle}"
+    assert c["email"] in text, "missing field: email"
     assert "PHOTO;ENCODING=b;TYPE=JPEG:" in text, "photo not embedded"
 
 

@@ -1,12 +1,13 @@
 {
   "first_name": "John",
   "last_name": "Halazonetis",
-  "title": "Product Engineer II",
+  "title": "Product Engineer II, Loss Prevention",
   "org": "Scandit AG",
   "email": "john.halazonetis@scandit.com",
   "city": "Zurich",
   "country": "Switzerland",
   "url": "https://www.linkedin.com/in/john-halazonetis-53bb83158/",
   "website": "https://scandit.com",
-  "photo": "photo-small.jpg"
+  "photo": "photo-small.jpg",
+  "office": "Zurich Office"
 }
