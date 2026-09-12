@@ -39,8 +39,9 @@ def build(c):
     lines = [
         "BEGIN:VCARD",
         "VERSION:3.0",
-        f"N:{esc(c['last_name'])};{esc(c['first_name'])};;;",
-        f"FN:{esc(c['first_name'])} {esc(c['last_name'])}",
+        # N is Family;Given;Additional;Prefix;Suffix
+        f"N:{esc(c['last_name'])};{esc(c['first_name'])};;;{esc(c.get('suffix', ''))}",
+        f"FN:{esc(' '.join(filter(None, [c['first_name'], c['last_name'], c.get('suffix')])))}",
         f"ORG:{esc(c['org'])}",
         f"TITLE:{esc(c['title'])}",
         f"EMAIL;TYPE=INTERNET,WORK:{c['email']}",
