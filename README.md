@@ -21,14 +21,20 @@ updated card from one already saved.
 
 ```sh
 SRC=path/to/new.jpg
-magick "$SRC" -resize 600x600^  -gravity north -extent 600x600 -quality 86 -strip photo.jpg
-magick "$SRC" -resize 300x300^  -gravity north -extent 300x300 -quality 80 -strip photo-small.jpg
-magick "$SRC" -resize 1200x630^ -gravity north -extent 1200x630 -quality 85 -strip og.jpg
+# Square crop wide enough that the head still fits once the page clips it
+# to a circle — a tight crop loses the hair and chin to the mask.
+magick "$SRC" -crop 2960x2960+0+0 +repage -resize 440x440 -quality 86 -strip photo.jpg
+magick "$SRC" -crop 2960x2960+0+0 +repage -resize 300x300 -quality 80 -strip photo-small.jpg
 python3 scripts/build-vcf.py
 ```
 
-`photo-small.jpg` is the base64 source embedded in the vCard — keep it under
-40KB. `photo.jpg` is what the page displays.
+Adjust the `-crop` geometry to the new source's dimensions. `photo-small.jpg`
+is the base64 source embedded in the vCard — keep it under 40KB. `photo.jpg`
+is what the page displays.
+
+`og.jpg` (the link-preview image) is rendered from a throwaway HTML file with
+headless Chrome so it always matches the live design — see the git history for
+the snippet, or just re-screenshot the page at 1200×630.
 
 ## Regenerating the QR code
 
