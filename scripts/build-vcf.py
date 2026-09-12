@@ -33,6 +33,11 @@ def fold(line, limit=75):
     return out
 
 
+def _display_name(c):
+    name = f"{c['first_name']} {c['last_name']}"
+    return f"{name}, {c['suffix']}" if c.get("suffix") else name
+
+
 def build(c):
     photo = base64.b64encode((ROOT / c["photo"]).read_bytes()).decode("ascii")
 
@@ -41,7 +46,9 @@ def build(c):
         "VERSION:3.0",
         # N is Family;Given;Additional;Prefix;Suffix
         f"N:{esc(c['last_name'])};{esc(c['first_name'])};;;{esc(c.get('suffix', ''))}",
-        f"FN:{esc(' '.join(filter(None, [c['first_name'], c['last_name'], c.get('suffix')])))}",
+        # FN is the display name, so it carries the comma the card shows;
+        # N's suffix slot above stays unpunctuated, being structured data
+        f"FN:{esc(_display_name(c))}",
         f"ORG:{esc(c['org'])}",
         f"TITLE:{esc(c['title'])}",
         f"EMAIL;TYPE=INTERNET,WORK:{c['email']}",
